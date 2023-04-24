@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.work.thirukkural.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/home_to_more"
+            app:destination="@id/nav_more_detail">
+            <argument
+                app:argType="integer"
+                android:name="key"
+                android:defaultValue="1" />
+            <argument
+                app:argType="string"
+                android:name="title"
+                android:defaultValue="No Title" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_more_detail"
+        android:name="com.work.thirukkural.ui.home.MoreDetailFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_more_detail">
+        <argument
+            android:name="key"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            app:argType="string"
+            android:name="title"
+            android:defaultValue="No Title" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_adhigarangal"
+        android:name="com.work.thirukkural.ui.adhigarangal.AdhigaramListFragment"
+        android:label="@string/menu_adhigarangal"
+        tools:layout="@layout/fragment_adhigarangal">
+        <action
+            android:id="@+id/adhigaram_to_splash"
+            app:destination="@id/nav_adhigaram_splash">
+            <argument
+                android:name="adhigaramId"
+                app:argType="integer"
+                android:defaultValue="1" />
+
+            <argument
+                android:name="adhigaramName"
+                app:argType="string"
+                android:defaultValue="1" />
+        </action>
+
+        <action
+            android:id="@+id/adhigaram_to_detail"
+            app:destination="@id/nav_adhigaram_detail">
+            <argument
+                android:name="adhigaramId"
+                app:argType="integer"
+                android:defaultValue="1" />
+            <argument
+                android:name="start"
+                app:argType="integer"
+                android:defaultValue="1" />
+            <argument
+                android:name="end"
+                app:argType="integer"
+                android:defaultValue="10" />
+
+            <argument
+                android:name="adhigaramName"
+                app:argType="string"
+                android:defaultValue="1" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_adhigaram_detail"
+        android:name="com.work.thirukkural.ui.adhigarangal.AdhigaramDetailFragment"
+        android:label="@string/menu_adhigarangal"
+        tools:layout="@layout/fragment_adhigaram_detail">
+        <argument
+            android:name="adhigaramId"
+            app:argType="integer"
+            android:defaultValue="1" />
+
+        <argument
+            android:name="adhigaramName"
+            app:argType="string"
+            android:defaultValue="1" />
+        <argument
+            android:name="start"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            android:name="end"
+            app:argType="integer"
+            android:defaultValue="10" />
+
+        <action
+            android:id="@+id/detail_to_kural"
+            app:destination="@id/nav_kural">
+            <argument
+                android:name="kuralId"
+                app:argType="integer"
+                android:defaultValue="1" />
+        </action>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_kural"
+        android:name="com.work.thirukkural.ui.kural.KuralFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_kural">
+        <argument
+            android:name="kuralId"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_paal"
+        android:name="com.work.thirukkural.ui.paal.PaalFragment"
+        android:label="@string/menu_adhigarangal"
+        tools:layout="@layout/fragment_paal" />
+
+    <fragment
+        android:id="@+id/nav_adhigaram_splash"
+        android:name="com.work.thirukkural.ui.adhigarangal.AdhigaramSplashFragment"
+        android:label="@string/menu_adhigarangal"
+        tools:layout="@layout/fragment_adhigaram_splash">
+        <argument
+            android:name="adhigaramId"
+            app:argType="integer"
+            android:defaultValue="1" />
+
+        <argument
+            android:name="adhigaramName"
+            app:argType="string"
+            android:defaultValue="1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.work.thirukkural.ui.favorites.FavoriteMainFragment"
+        android:label="@string/menu_favorites"
+        tools:layout="@layout/fragment_favorite_main" />
+
+    <fragment
+        android:id="@+id/nav_alarm"
+        android:name="com.work.thirukkural.ui.alarm.AlarmFragment"
+        android:label="@string/menu_alarm"
+        tools:layout="@layout/fragment_alarm" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.work.thirukkural.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
+</navigation>

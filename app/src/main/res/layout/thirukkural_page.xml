@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:background="@color/white">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.work.thirukkural.view.CustomTextView
+                        android:id="@+id/kural_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="4dp"
+                        android:minHeight="72dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="8dp"
+                        android:text="அகர முதல எழுத்தெல்லாம் ஆதி
+பகவன் முதற்றே உலகு."
+                        android:textColor="#1a237e"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/kural_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:paddingBottom="8dp"
+                        android:paddingRight="10dp"
+                        android:text="145"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <include layout="@layout/separator_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/first_explanation"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/first_exp_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="72dp"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="8dp"
+                    android:textColor="#616161"
+                    android:text="எழுத்துக்கள் எல்லாம் அகரத்தை அடிப்படையாக கொண்டிருக்கின்றன. அதுபோல உலகம் கடவுளை அடிப்படையாக கொண்டிருக்கிறது." />
+
+                <include layout="@layout/separator_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/second_explanation"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/second_exp_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="72dp"
+                    android:textColor="#616161"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="8dp"
+                    android:text="எழுத்துக்கள் எல்லாம் அகரத்தில் தொடங்குகின்றன; (அது போல) உலகம் கடவுளில் தொடங்குகிறது." />
+
+                <include layout="@layout/separator_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/third_explanation"
+                    android:textColor="@color/primary_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/third_exp_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="72dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="#616161"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="8dp"
+                    android:text="As the letter A is the first of all letters, so the eternal God is first in the world." />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="#FF4081"
+        android:id="@+id/favorite_button"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
