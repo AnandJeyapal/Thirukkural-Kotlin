@@ -14,7 +14,6 @@ class AdhigaramPageAdapter(fm: FragmentManager, lifecycle: Lifecycle) : Fragment
 
     override fun createFragment(position: Int): Fragment {
         val bundle = Bundle()
-        Log.d("XXX", "pos: "+position)
         bundle.putInt("part", position+1)
         val paalFragment = PaalFragment()
         paalFragment.arguments = bundle

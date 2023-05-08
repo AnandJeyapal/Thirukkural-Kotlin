@@ -9,20 +9,20 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.work.thirukkural.adapter.AdhigaramAdapter
 import com.work.thirukkural.adapter.AdhigaramClickListener
 import com.work.thirukkural.data.entities.Adhigaram
 import com.work.thirukkural.databinding.FragmentPaalBinding
-import com.work.thirukkural.ui.adhigarangal.AdhigaramListFragmentDirections
 import com.work.thirukkural.ui.adhigarangal.AdhigaramSplashActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PaalFragment : Fragment(), AdhigaramClickListener {
 
+    private lateinit var adhigaramAdapter: AdhigaramAdapter
     private var _binding: FragmentPaalBinding? = null
+    private lateinit var adhigarams: List<Adhigaram>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -46,12 +46,13 @@ class PaalFragment : Fragment(), AdhigaramClickListener {
 
         val adhigaramList = binding.adhigaramList
         adhigaramList.layoutManager = LinearLayoutManager(context)
-        val adapter = AdhigaramAdapter(emptyList(), this)
-        adhigaramList.adapter = adapter
+        adhigaramAdapter = AdhigaramAdapter(emptyList(), this)
+        adhigaramList.adapter = adhigaramAdapter
         paalViewModel.adhigarams.observe(viewLifecycleOwner) {
             if(it != null) {
-                adapter.adhigarams = it
-                adapter.notifyDataSetChanged()
+                adhigarams = it
+                adhigaramAdapter.adhigarams = it
+                adhigaramAdapter.notifyDataSetChanged()
             }
         }
         paalViewModel.fetchAdhigarams(partName)
@@ -76,18 +77,33 @@ class PaalFragment : Fragment(), AdhigaramClickListener {
     }
 
     override fun onAdhigaramClicked(adhigaram: Adhigaram) {
-//        val action = AdhigaramListFragmentDirections.adhigaramToSplash(adhigaram.number ?: 1, adhigaram.name ?: "Test")
-
-//        val action = AdhigaramListFragmentDirections.adhigaramToDetail(adhigaram.number ?: 1,
-//            adhigaram.start ?: 1, adhigaram.end ?: 10, adhigaram.name ?: "Test")
-//        findNavController().navigate(action)
-
         val bundle = bundleOf("adhigaramId" to adhigaram.number, "adhigaramName" to adhigaram.name, "start" to adhigaram.start,
         "end" to adhigaram.end)
         val intent = Intent(requireActivity(), AdhigaramSplashActivity::class.java)
         intent.putExtras(bundle)
         requireActivity().startActivity(intent)
 
+    }
+
+    fun resetAdapter() {
+        adhigaramAdapter.adhigarams = adhigarams;
+        adhigaramAdapter.notifyDataSetChanged()
+    }
+
+    fun doSearch(adhigaramNumber: String) {
+        val matchedAdhigarams = getMatchedAdhigarams(adhigaramNumber)
+        adhigaramAdapter.adhigarams = matchedAdhigarams
+        adhigaramAdapter.notifyDataSetChanged()
+    }
+
+    private fun getMatchedAdhigarams(adhigaramNumber: String): List<Adhigaram> {
+        val matchedAdhigarams = mutableListOf<Adhigaram>()
+        for(adhigaram in adhigarams) {
+            if(adhigaram.number.toString().startsWith(adhigaramNumber)) {
+                matchedAdhigarams.add(adhigaram)
+            }
+        }
+        return matchedAdhigarams
     }
 }
 
