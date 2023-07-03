@@ -11,6 +11,10 @@ class KuralsRepository @Inject constructor(private val kuralDao: KuralDao) {
         return kuralDao.getKurals(start, end)
     }
 
+    suspend fun getKurals(query: String): List<Kural> {
+        return kuralDao.getKurals("%$query%")
+    }
+
     suspend fun getKural(kuralId: Int): Kural {
         return kuralDao.getKural(kuralId)
     }

@@ -14,13 +14,13 @@
             android:id="@+id/home_to_more"
             app:destination="@id/nav_more_detail">
             <argument
-                app:argType="integer"
                 android:name="key"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
             <argument
-                app:argType="string"
                 android:name="title"
-                android:defaultValue="No Title" />
+                android:defaultValue="No Title"
+                app:argType="string" />
         </action>
     </fragment>
 
@@ -31,12 +31,12 @@
         tools:layout="@layout/fragment_more_detail">
         <argument
             android:name="key"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
         <argument
-            app:argType="string"
             android:name="title"
-            android:defaultValue="No Title" />
+            android:defaultValue="No Title"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -49,13 +49,13 @@
             app:destination="@id/nav_adhigaram_splash">
             <argument
                 android:name="adhigaramId"
-                app:argType="integer"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
 
             <argument
                 android:name="adhigaramName"
-                app:argType="string"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="string" />
         </action>
 
         <action
@@ -63,21 +63,21 @@
             app:destination="@id/nav_adhigaram_detail">
             <argument
                 android:name="adhigaramId"
-                app:argType="integer"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
             <argument
                 android:name="start"
-                app:argType="integer"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
             <argument
                 android:name="end"
-                app:argType="integer"
-                android:defaultValue="10" />
+                android:defaultValue="10"
+                app:argType="integer" />
 
             <argument
                 android:name="adhigaramName"
-                app:argType="string"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="string" />
         </action>
     </fragment>
 
@@ -88,29 +88,29 @@
         tools:layout="@layout/fragment_adhigaram_detail">
         <argument
             android:name="adhigaramId"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
 
         <argument
             android:name="adhigaramName"
-            app:argType="string"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="string" />
         <argument
             android:name="start"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
         <argument
             android:name="end"
-            app:argType="integer"
-            android:defaultValue="10" />
+            android:defaultValue="10"
+            app:argType="integer" />
 
         <action
             android:id="@+id/detail_to_kural"
             app:destination="@id/nav_kural">
             <argument
                 android:name="kuralId"
-                app:argType="integer"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
         </action>
     </fragment>
 
@@ -122,8 +122,8 @@
         tools:layout="@layout/fragment_kural">
         <argument
             android:name="kuralId"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
     </fragment>
 
 
@@ -140,13 +140,13 @@
         tools:layout="@layout/fragment_adhigaram_splash">
         <argument
             android:name="adhigaramId"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
 
         <argument
             android:name="adhigaramName"
-            app:argType="string"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -160,6 +160,33 @@
         android:name="com.work.thirukkural.ui.alarm.AlarmFragment"
         android:label="@string/menu_alarm"
         tools:layout="@layout/fragment_alarm" />
+
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.work.thirukkural.ui.search.SearchFragment"
+        android:label="@string/menu_search"
+        tools:layout="@layout/fragment_search_home">
+        <action
+            android:id="@+id/search_to_results"
+            app:destination="@id/nav_search_results">
+            <argument
+                android:name="query"
+                android:defaultValue="1"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_search_results"
+        android:name="com.work.thirukkural.ui.search.SearchResultsFragment"
+        android:label="@string/menu_search"
+        tools:layout="@layout/fragment_search">
+        <argument
+            android:name="query"
+            android:defaultValue="1"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_about"

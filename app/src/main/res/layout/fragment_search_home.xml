@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="12dp"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/kural_en"
+            android:layout_width="wrap_content"
+            android:text="குரல் எண்"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/adhigara_en"
+            android:text="அதிகார எண்"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/free_text"
+            android:layout_width="wrap_content"
+            android:text="வார்த்தை தேடல்"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+    <EditText
+        android:id="@+id/kural_adhigara_en"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:paddingHorizontal="8dp"
+        android:background="@drawable/search_bg"
+        android:layout_marginBottom="12dp"
+        android:hint="குரல் எண்"
+        android:gravity="center_vertical"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/text_search"
+        android:paddingHorizontal="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/search_bg"
+        android:hint="குரல் அல்லது அதிகார வார்த்தை"
+        android:paddingTop="8dp"
+        android:inputType="text|textMultiLine"
+        android:gravity="top"/>
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ColorPrimaryDark"
+        android:drawableLeft="@drawable/ic_search"
+        android:text="தேடுக"
+        android:drawablePadding="8dp"
+        android:paddingHorizontal="12dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:layout_margin="12dp"/>
+</LinearLayout>

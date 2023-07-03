@@ -11,11 +11,13 @@
     <string name="menu_home">முதற்பக்கம்</string>
     <string name="menu_adhigarangal">அதிகாரங்கள்</string>
     <string name="menu_favorites">விருப்பமானவை</string>
+    <string name="menu_search">தேடல்</string>
     <string name="menu_alarm">தினம் ஒரு குறள்</string>
     <string name="menu_about">விவரம்</string>
 
 
     <string name="app_name">திருக்குறள் </string>
+    <string name="kural_result_header">திருக்குறள்கள்</string>
     <string name="action_settings">Settings</string>
     <string name="second_explanation">சாலமன் பாப்பையா உரை</string>
     <string name="first_explanation">மு.வ உரை</string>

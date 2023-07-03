@@ -17,6 +17,9 @@ interface KuralDao {
     @Query("SELECT * FROM kurals WHERE id >= :start AND id <= :end")
     suspend fun getKurals(start: Int?=1, end: Int?=10): List<Kural>
 
+    @Query("SELECT * FROM kurals WHERE kural LIKE :query")
+    suspend fun getKurals(query: String?=""): List<Kural>
+
     @Query("SELECT * FROM kurals WHERE id = :kuralId")
     suspend fun getKural(kuralId: Int): Kural
 

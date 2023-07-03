@@ -15,6 +15,10 @@ class AdhigaramsRepository @Inject constructor(private val adhigaramsDao: Adhiga
         return adhigaramsDao.loadAdhigaram(adhigaramId)
     }
 
+    suspend fun getAdhigarams(query: String): List<Adhigaram> {
+        return adhigaramsDao.getAdhigarams("%$query%")
+    }
+
     suspend fun updateFavorite(adhigaramId : Int): Boolean? {
         val adhigaram  = adhigaramsDao.getAdhigaram(adhigaramId)
         val favorite = adhigaram.favorite
