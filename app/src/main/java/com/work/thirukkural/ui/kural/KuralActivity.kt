@@ -1,6 +1,9 @@
 package com.work.thirukkural.ui.kural
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
@@ -9,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.work.thirukkural.R
 import com.work.thirukkural.databinding.ActivityKuralBinding
+import com.work.thirukkural.ui.dialog.ShareKuralDialogFragment
+import com.work.thirukkural.ui.dialog.ShareKuralDialogListener
+import com.work.thirukkural.utils.shareKural
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +22,7 @@ class KuralActivity : AppCompatActivity() {
     private lateinit var binding: ActivityKuralBinding
     private lateinit var markFavorite: FloatingActionButton
 
+    private val kuralViewModel by viewModels<KuralViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityKuralBinding.inflate(layoutInflater)
@@ -25,7 +32,6 @@ class KuralActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val kuralViewModel by viewModels<KuralViewModel>()
 
         val kuralId = intent.getIntExtra("kuralId", 1)
 
@@ -60,7 +66,6 @@ class KuralActivity : AppCompatActivity() {
             }
         }
 
-
         kuralViewModel.fetchKural(kuralId)
     }
 
@@ -68,5 +73,29 @@ class KuralActivity : AppCompatActivity() {
         markFavorite.setImageResource(if (favorite == 1) R.drawable.ic_star else R.drawable.ic_not_favorite)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_kural_detail, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_share_kural -> showShareDialog()
+            else -> super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showShareDialog() {
+        ShareKuralDialogFragment(object: ShareKuralDialogListener{
+            override fun handlePositiveAction(selectedItems: List<Int>) {
+                val kural =kuralViewModel.kural.value
+                if(kural != null)
+                shareKural(kural, this@KuralActivity, selectedItems)
+            }
+
+        }).show(supportFragmentManager, "Share Dialog")
+    }
 
 }

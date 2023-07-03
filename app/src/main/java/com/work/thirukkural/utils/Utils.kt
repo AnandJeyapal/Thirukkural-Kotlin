@@ -52,14 +52,16 @@ fun shareKural(kural: Kural, context: Context, explanations: List<Int>) {
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name))
-    intent.putExtra(
-        Intent.EXTRA_TEXT,
-        kural.toString() + "\n\n" + getExplanations(explanations, kural)
-    )
+    var shareContent = kural.kural
+    val p = getExplanations(explanations, kural)
+    if(p.isNotEmpty()) {
+        shareContent += ("\n\n" + p.toString())
+    }
+    intent.putExtra(Intent.EXTRA_TEXT, shareContent)
     context.startActivity(intent)
 }
 
-fun getExplanations(explanations: List<Int>, kural: Kural) {
+fun getExplanations(explanations: List<Int>, kural: Kural): StringBuilder {
     val stringBuilder = StringBuilder()
     if(explanations.contains(1)) {
         stringBuilder.append("சாலமன் பாப்பையா உரை").append("\n").append(kural.first_exp).append("\n")
@@ -70,4 +72,5 @@ fun getExplanations(explanations: List<Int>, kural: Kural) {
     if(explanations.contains(3)) {
         stringBuilder.append("English").append("\n").append(kural.third_exp).append("\n")
     }
+    return stringBuilder
 }

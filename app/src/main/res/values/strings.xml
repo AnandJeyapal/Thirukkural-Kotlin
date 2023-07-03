@@ -23,7 +23,6 @@
     <string name="first_explanation">மு.வ உரை</string>
     <string name="third_explanation">English</string>
     <string name="app_sub_name">மூலமும் உரையும்</string>
-    <string name="share_dlg_title">உரை தேர்வு</string>
     <string name="ok">பகிர்க</string>
     <string name="cancel">வேண்டாம்</string>
     <string name="action_share">பகிர்க</string>
@@ -98,5 +97,12 @@
     <string name="about_string">உலகத்தில் ஏழு \n அதிசயங்கள் உள்ளது \n என்று சொல்கிறார்கள்...\n\n எனக்கு ஒரே அதிசயம் \n என் தமிழ் மொழி \n மட்டுமே...\n</string>
 
 
+    <string-array name="share_options">
+        <item>@string/first_explanation</item>
+        <item>@string/second_explanation</item>
+        <item>@string/third_explanation</item>
+    </string-array>
+
+    <string name="share_dlg_title">உரை தேர்வு</string>
 </resources>
 
