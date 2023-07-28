@@ -2,38 +2,30 @@ package com.work.thirukkural.adapter
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.work.thirukkural.R
 import com.work.thirukkural.data.entities.Adhigaram
+import com.work.thirukkural.databinding.RowAdhigaramBinding
 
-class AdhigaramAdapter(var adhigarams: List<Adhigaram>, val adhigaramClickListener: AdhigaramClickListener) : RecyclerView.Adapter<AdhigaramAdapter.ViewHolder>() {
+class AdhigaramAdapter(var adhigarams: List<Adhigaram>, val adhigaramClickListener: AdhigaramClickListener) : RecyclerView.Adapter<AdhigaramAdapter.AdhigaramViewHolder>() {
 
 
+    class AdhigaramViewHolder(val rowAdhigaramBinding: RowAdhigaramBinding) : RecyclerView.ViewHolder(rowAdhigaramBinding.root)
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val numberTextView: TextView
-        val nameTextView: TextView
-        init {
-            numberTextView = view.findViewById(R.id.adhigaram_number)
-            nameTextView = view.findViewById(R.id.adhigaram_description)
-        }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdhigaramViewHolder {
+        val binding = RowAdhigaramBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AdhigaramViewHolder(binding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_adhigaram, parent,false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener{
-            adhigaramClickListener.onAdhigaramClicked(adhigarams[position])
+    override fun onBindViewHolder(holder: AdhigaramViewHolder, position: Int) {
+        with(holder) {
+            with(adhigarams[position]) {
+                rowAdhigaramBinding.adhigaramNumber.text = number.toString()
+                rowAdhigaramBinding.adhigaramDescription.text= name
+                rowAdhigaramBinding.root.setOnClickListener { adhigaramClickListener.onAdhigaramClicked(this) }
+            }
         }
-        holder.numberTextView.text = adhigarams[position].number.toString()
-        holder.nameTextView.text = adhigarams[position].name
     }
 
     override fun getItemCount(): Int {

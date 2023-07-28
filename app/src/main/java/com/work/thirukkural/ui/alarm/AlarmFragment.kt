@@ -1,15 +1,21 @@
 package com.work.thirukkural.ui.alarm
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.work.thirukkural.databinding.FragmentAlarmBinding
 import com.work.thirukkural.view.ShakingBell
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AlarmFragment : Fragment() {
@@ -27,7 +33,7 @@ class AlarmFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val alarmViewModel by viewModels<AlarmViewModel>()
+        val alarmViewModel by activityViewModels<AlarmViewModel>()
 
         _binding = FragmentAlarmBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -35,10 +41,35 @@ class AlarmFragment : Fragment() {
         alarmBell = binding.alarmBell
         alarmSwitch = binding.alarmSwitch
 
+        val timePanel = binding.timePanel
+        timePanel.setOnClickListener { showTimePicker() }
+
+        val timeTextView = binding.timeView
+
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) alarmBell.shake() else alarmBell.setAlarmOff()}
+            if(isChecked) {
+                alarmViewModel.setAlarm()
+            } else {
+                alarmViewModel.clearAlarm()
+            }
+        }
+
+        alarmViewModel.time.observe(viewLifecycleOwner) {
+             timeTextView.text = it
+        }
+
+        alarmViewModel.alarmSet.observe(viewLifecycleOwner) { alarmSet ->
+            // New value received
+            Log.d("XXX", "collecting $alarmSet")
+            alarmSwitch.isChecked = alarmSet
+            if(alarmSet) alarmBell.shake() else alarmBell.setAlarmOff()
+        }
 
         return root
+    }
+
+    private fun showTimePicker() {
+        TimePickerFragment().show(childFragmentManager, "timePicker")
     }
 
     override fun onDestroyView() {

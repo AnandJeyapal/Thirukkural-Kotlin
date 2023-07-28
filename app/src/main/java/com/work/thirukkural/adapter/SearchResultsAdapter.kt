@@ -4,33 +4,24 @@ package com.work.thirukkural.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.work.thirukkural.R
 import com.work.thirukkural.data.entities.Adhigaram
 import com.work.thirukkural.data.entities.Kural
+import com.work.thirukkural.databinding.RowSearchResultBinding
 
-class SearchResultsAdapter(var adhigarams: List<Adhigaram>, var kurals: List<Kural>, val adhigaramClickListener: AdhigaramClickListener, val kuralClickListener: KuralClickListener) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
+class SearchResultsAdapter(var adhigarams: List<Adhigaram>, var kurals: List<Kural>, val adhigaramClickListener: AdhigaramClickListener, val kuralClickListener: KuralClickListener) : RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder>() {
 
 
+    class SearchResultViewHolder(val rowSearchResultBinding: RowSearchResultBinding) : RecyclerView.ViewHolder(rowSearchResultBinding.root)
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val headerTextView: TextView
-        val searchResultTextView: TextView
-        init {
-            headerTextView = view.findViewById(R.id.header)
-            searchResultTextView = view.findViewById(R.id.search_text_view)
-        }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
+        val binding = RowSearchResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchResultViewHolder(binding)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_search_result, parent,false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         var headerStr = ""
         if(position == 0) {
             headerStr = holder.itemView.context.getString(R.string.menu_adhigarangal)
@@ -41,18 +32,18 @@ class SearchResultsAdapter(var adhigarams: List<Adhigaram>, var kurals: List<Kur
             headerStr = holder.itemView.context.getString(R.string.kural_result_header)
         }
         if(headerStr.isNotEmpty()) {
-            holder.headerTextView.text = headerStr;
+            holder.rowSearchResultBinding.header.text = headerStr;
         }
-        holder.headerTextView.visibility = if (headerStr.isEmpty()) View.GONE else View.VISIBLE
+        holder.rowSearchResultBinding.header.visibility = if (headerStr.isEmpty()) View.GONE else View.VISIBLE
 
         if (position < adhigarams.size) {
-            holder.searchResultTextView.text = adhigarams[position].name
+            holder.rowSearchResultBinding.searchTextView.text = adhigarams[position].name
             holder.itemView.setOnClickListener {
                 adhigaramClickListener.onAdhigaramClicked(adhigarams[position])
             }
         } else {
             val kuralPosition = position - adhigarams.size;
-            holder.searchResultTextView.text = kurals[kuralPosition].kural
+            holder.rowSearchResultBinding.searchTextView.text = kurals[kuralPosition].kural
             holder.itemView.setOnClickListener {
                 kuralClickListener.onKuralClicked(kurals[kuralPosition])
             }
