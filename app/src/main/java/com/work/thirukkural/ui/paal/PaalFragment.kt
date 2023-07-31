@@ -36,8 +36,6 @@ class PaalFragment : Fragment(), AdhigaramClickListener {
 
         val paalViewModel by viewModels<PaalViewModel>()
 
-        Log.d("XXX", "OnCreateView")
-
         _binding = FragmentPaalBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

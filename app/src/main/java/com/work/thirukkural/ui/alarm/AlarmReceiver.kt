@@ -8,7 +8,6 @@ import com.work.thirukkural.utils.showNotification
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("XXX", "OnReceive")
         showNotification(context, intent?.getIntExtra("KuralId", 0) ?: 1,
             intent?.getStringExtra("KuralDescription") ?: "")
     }

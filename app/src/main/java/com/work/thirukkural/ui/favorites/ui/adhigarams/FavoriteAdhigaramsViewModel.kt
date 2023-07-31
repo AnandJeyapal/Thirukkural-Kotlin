@@ -25,7 +25,6 @@ class FavoriteAdhigaramsViewModel @Inject constructor(val adhigaramsRepository: 
     fun fetchFavoriteAdhigarams() {
         viewModelScope.launch {
             adhigaramsRepository.getFavoriteAdhigarams().collect {
-                Log.d("XXX", it.toString())
                 _favoriteAdhigarams.value = it
             }
         }

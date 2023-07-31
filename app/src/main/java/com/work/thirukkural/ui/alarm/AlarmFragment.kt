@@ -60,7 +60,6 @@ class AlarmFragment : Fragment() {
 
         alarmViewModel.alarmSet.observe(viewLifecycleOwner) { alarmSet ->
             // New value received
-            Log.d("XXX", "collecting $alarmSet")
             alarmSwitch.isChecked = alarmSet
             if(alarmSet) alarmBell.shake() else alarmBell.setAlarmOff()
         }

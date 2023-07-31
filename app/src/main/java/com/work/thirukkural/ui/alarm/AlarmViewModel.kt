@@ -44,7 +44,6 @@ class AlarmViewModel @Inject constructor(application: Application, val kuralsRep
         if(_alarmSet.value == true) {
             return
         }
-        Log.d("XXX", "Set Alarm")
         _alarmSet.value = true
         val editor = sharedPreferences.edit()
         editor.putBoolean("Set", true)
@@ -57,7 +56,6 @@ class AlarmViewModel @Inject constructor(application: Application, val kuralsRep
             val kural = kuralsRepository.getKural(randomKuralIndex)
             notificationIntent.putExtra("KuralId", randomKuralIndex)
             notificationIntent.putExtra("KuralDescription", kural.kural)
-            Log.d("XXX", "scheduleAlarm")
             scheduleAlarm(notificationIntent)
         }
 
