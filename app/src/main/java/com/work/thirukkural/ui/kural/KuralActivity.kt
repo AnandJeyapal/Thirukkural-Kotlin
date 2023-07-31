@@ -92,7 +92,7 @@ class KuralActivity : AppCompatActivity() {
             override fun handlePositiveAction(selectedItems: List<Int>) {
                 val kural =kuralViewModel.kural.value
                 if(kural != null)
-                shareKural(kural, this@KuralActivity, selectedItems)
+                    shareKural(kural, this@KuralActivity, selectedItems)
             }
 
         }).show(supportFragmentManager, "Share Dialog")

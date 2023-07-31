@@ -1,21 +1,29 @@
 package com.work.thirukkural.ui.alarm
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.work.thirukkural.ThirukkuralApplication
+import com.work.thirukkural.repository.KuralsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.util.TimeZone
 import javax.inject.Inject
 
 @HiltViewModel
-class AlarmViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+class AlarmViewModel @Inject constructor(application: Application, val kuralsRepository: KuralsRepository) : AndroidViewModel(application) {
     private val sharedPreferences by lazy {
         getApplication<Application>().getSharedPreferences("thirukkural", Context.MODE_PRIVATE)
+    }
+    private val alarmManager by lazy {
+        getApplication<ThirukkuralApplication>().getSystemService(Context.ALARM_SERVICE) as AlarmManager
     }
     fun storeAlarmTime(hourOfDay: Int, minute: Int) {
         val editor = sharedPreferences.edit()
@@ -33,10 +41,42 @@ class AlarmViewModel @Inject constructor(application: Application) : AndroidView
     }
 
     fun setAlarm() {
+        if(_alarmSet.value == true) {
+            return
+        }
+        Log.d("XXX", "Set Alarm")
         _alarmSet.value = true
         val editor = sharedPreferences.edit()
         editor.putBoolean("Set", true)
         editor.apply()
+
+        val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
+
+        viewModelScope.launch {
+            val randomKuralIndex = java.util.Random().nextInt(1330)
+            val kural = kuralsRepository.getKural(randomKuralIndex)
+            notificationIntent.putExtra("KuralId", randomKuralIndex)
+            notificationIntent.putExtra("KuralDescription", kural.kural)
+            Log.d("XXX", "scheduleAlarm")
+            scheduleAlarm(notificationIntent)
+        }
+
+    }
+
+    private fun scheduleAlarm(notificationIntent: Intent) {
+        val pendingIntent = PendingIntent.getBroadcast(
+            getApplication(),
+            0,
+            notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val calendar: java.util.Calendar = java.util.Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(java.util.Calendar.HOUR_OF_DAY, sharedPreferences.getInt("Hour", 7))
+            set(java.util.Calendar.MINUTE, sharedPreferences.getInt("Minute", 0))
+        }
+        alarmManager.cancel(pendingIntent)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
     }
 
     fun clearAlarm() {
@@ -66,5 +106,7 @@ class AlarmViewModel @Inject constructor(application: Application) : AndroidView
         sharedPreferences.getBoolean("Set", false)
     }
     val alarmSet: LiveData<Boolean> = _alarmSet
+
+    private val _kuralDescription: MutableLiveData<String> = MutableLiveData()
 
 }

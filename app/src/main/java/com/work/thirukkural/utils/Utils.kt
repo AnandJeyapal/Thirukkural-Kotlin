@@ -1,10 +1,20 @@
 package com.work.thirukkural.utils
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.work.thirukkural.R
 import com.work.thirukkural.data.entities.Kural
+import com.work.thirukkural.ui.kural.KuralActivity
+
 
 fun getColorToUpdate(adhigaramId: Int, resources: Resources): Int {
     val colors = resources.getIntArray(R.array.primary_colors)
@@ -73,4 +83,46 @@ fun getExplanations(explanations: List<Int>, kural: Kural): StringBuilder {
         stringBuilder.append("English").append("\n").append(kural.third_exp).append("\n")
     }
     return stringBuilder
+}
+
+fun showNotification(context: Context?, kuralId: Int, kuralDescription: String) {
+    if(context == null) {
+        return
+    }
+    val kuralIntent = Intent(context, KuralActivity::class.java)
+    kuralIntent.putExtra("kuralId", kuralId)
+
+    // Channel ID
+    val channelId = "defaultId"
+
+    // Notification Manager
+    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    val kuralPendingIndent = PendingIntent.getActivity(context, 0, kuralIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        createNotificationChannel(channelId, notificationManager)
+    }
+    val notification = NotificationCompat.Builder(context, channelId)
+    .setSmallIcon(R.drawable.ic_events)
+    .setContentTitle("தினம் ஒரு குறள்")
+    .setStyle(NotificationCompat.BigTextStyle().bigText(kuralDescription))
+    .addAction(R.drawable.ic_search, "உரை", kuralPendingIndent).
+    setContentIntent(kuralPendingIndent).setAutoCancel(true).build()
+    notification.flags = notification.flags or Notification.FLAG_AUTO_CANCEL
+    notificationManager.notify(1, notification)
+
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun createNotificationChannel(channelId: String, notificationManager: NotificationManager) {
+    val notificationChannel = NotificationChannel(channelId, "Life", NotificationManager.IMPORTANCE_LOW)
+    with(notificationChannel) {
+        enableLights(true)
+        lightColor = Color.RED
+        enableVibration(true)
+        vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+    }
+    notificationManager.createNotificationChannel(notificationChannel)
+
 }

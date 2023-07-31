@@ -45,12 +45,12 @@ class SearchFragment : Fragment() {
         val searchButton = binding.searchBtn
         adhigramOrKuralEnText.visibility = View.GONE
         freeText.visibility = View.GONE
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             run {
                 adhigramOrKuralEnText.visibility =
                     if (checkedId == R.id.adhigara_en || checkedId == R.id.kural_en) View.VISIBLE else View.GONE
                 freeText.visibility = if (checkedId == R.id.free_text) View.VISIBLE else View.GONE
-                adhigramOrKuralEnText.hint =  if (checkedId == R.id.adhigara_en) "அதிகார எண்" else if(checkedId == R.id.kural_en) "குரல் எண்" else ""
+                adhigramOrKuralEnText.hint =  if (checkedId == R.id.adhigara_en) "அதிகார எண்" else if(checkedId == R.id.kural_en) "குறள் எண்" else ""
             }
         }
         searchButton.setOnClickListener {
