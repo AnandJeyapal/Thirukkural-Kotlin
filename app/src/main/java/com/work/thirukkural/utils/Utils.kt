@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -98,7 +99,16 @@ fun showNotification(context: Context?, kuralId: Int, kuralDescription: String) 
     // Notification Manager
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val kuralPendingIndent = PendingIntent.getActivity(context, 0, kuralIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+    // Create the TaskStackBuilder
+    val kuralPendingIndent: PendingIntent? = TaskStackBuilder.create(context).run {
+        // Add the intent, which inflates the back stack
+        addNextIntentWithParentStack(kuralIntent)
+        // Get the PendingIntent containing the entire back stack
+        getPendingIntent(
+            0,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
 
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         createNotificationChannel(channelId, notificationManager)

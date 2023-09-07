@@ -26,6 +26,8 @@ class AlarmViewModel @Inject constructor(application: Application, val kuralsRep
         getApplication<ThirukkuralApplication>().getSystemService(Context.ALARM_SERVICE) as AlarmManager
     }
     fun storeAlarmTime(hourOfDay: Int, minute: Int) {
+        // Clear existing alarm
+        clearAlarm()
         val editor = sharedPreferences.edit()
         with(editor) {
             putInt("Hour", hourOfDay)
@@ -101,10 +103,13 @@ class AlarmViewModel @Inject constructor(application: Application, val kuralsRep
 
 
     private val _alarmSet = MutableLiveData<Boolean>().apply {
-        sharedPreferences.getBoolean("Set", false)
-    }
+        value = sharedPreferences.getBoolean("Set", false)
+    }.also { updateTime() }
     val alarmSet: LiveData<Boolean> = _alarmSet
 
-    private val _kuralDescription: MutableLiveData<String> = MutableLiveData()
+    private fun updateTime() {
+        val minuteString = "%02d".format(_minute.value)
+        _time.value = "${_hour.value}:$minuteString"
+    }
 
 }

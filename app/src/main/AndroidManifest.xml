@@ -36,6 +36,7 @@
             android:theme="@style/AdhigaramDetailTheme" />
         <activity
             android:name=".ui.kural.KuralActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Thirukkural" />
         <receiver android:name=".ui.alarm.AlarmReceiver" android:enabled="true"/>
     </application>
